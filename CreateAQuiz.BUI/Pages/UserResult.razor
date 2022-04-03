@@ -1,0 +1,67 @@
+@page "/userResult"
+
+@inject IQuizServiceUI _quizService
+@inject NavigationManager NavigationManager
+
+
+<div>
+  @if (Quizes == null)
+  {
+    <p>Loading...</p>
+
+  }
+  else
+  {
+
+
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Quiz Id</th>
+          <th scope="col">Content Id</th>
+          <th scope="col">Session</th>
+          <th scope="col">Content Title</th>
+          <th scope="col">Oluşturan Kullanıcı</th>
+          <th scope="col">RSS Publish Date</th>
+          <th scope="col"></th>
+
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (var item in Quizes.Data)
+        {
+          <tr>
+            <td>#@item.Id</td>
+            <td>@item.Article.Id</td>
+            <td>@item.Session</td>
+            <td>@item.Article.Title</td>
+            <td>@item.User.Title</td>
+            <td>@item.Article.PublishArticleDate</td>
+            <td>
+              <button @onclick="@(()=>route(item.Id))" class="btn btn-success">Sınav'a Gir</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+  }
+</div>
+
+
+
+@code {
+  public IDataResult<List<Quiz>> Quizes { get; set; } = null;
+
+  public void route(int id)
+  {
+    NavigationManager.NavigateTo($"/quiz/{id}");
+  }
+
+  protected override async Task OnInitializedAsync()
+  {
+    Quizes =  _quizService.GetAll();
+
+  }
+}
