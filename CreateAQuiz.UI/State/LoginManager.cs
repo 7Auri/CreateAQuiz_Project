@@ -22,7 +22,7 @@ namespace CreateAQuiz.UI.State
 
     public async Task<IDataResult<User>> Login(UserForLoginDto auth)
     {
-      HttpResponseMessage response = await _http.PostAsJsonAsync("auth/login", auth);
+      HttpResponseMessage response = await _http.PostAsJsonAsync("http://localhost:5000/api/auth/login", auth);
 
       if (response.IsSuccessStatusCode)
       {

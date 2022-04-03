@@ -34,7 +34,7 @@ namespace CreateAQuiz.UI.State
 
         public async Task<IDataResult<List<int>>> CheckAnswer(List<AnswerDto> answers)
         {
-            var result = await _http.PostAsJsonAsync($"useranswer/check", answers);
+            var result = await _http.PostAsJsonAsync($"http://localhost:5000/api/useranswer/check", answers);
             return await result.Content.ReadFromJsonAsync<IDataResult<List<int>>>();
         }
 
@@ -71,7 +71,7 @@ namespace CreateAQuiz.UI.State
         }
         async Task<IDataResult<List<Quiz>>> IQuizServiceUI.GetAllQuiz()
         {
-            return await _http.GetFromJsonAsync<IDataResult<List<Quiz>>>($"quiz");
+            return await _http.GetFromJsonAsync<IDataResult<List<Quiz>>>($"http://localhost:5000/api/quiz");
         }
 
         public IDataResult<Quiz> GetById(int quizId)
@@ -97,7 +97,7 @@ namespace CreateAQuiz.UI.State
                     _state.questions[i].ContentId = _state.Article.Id;
                     _state.questions[i].Order = i;
                     _state.questions[i].UserId = userId;
-                    HttpResponseMessage addedQuestionResponse = await _http.PostAsJsonAsync($"question", _state.questions[i]);
+                    HttpResponseMessage addedQuestionResponse = await _http.PostAsJsonAsync($"http://localhost:5000/api/question", _state.questions[i]);
                     DataResult<Question> addedQuestion = await addedQuestionResponse.Content.ReadFromJsonAsync<DataResult<Question>>();
 
 
@@ -107,7 +107,7 @@ namespace CreateAQuiz.UI.State
 
                         _state.questions[i].Options[k].Order = k;
                         _state.questions[i].Options[k].QuestionId = addedQuestion.Data.Id;
-                        await _http.PostAsJsonAsync($"option", _state.questions[i].Options[k]);
+                        await _http.PostAsJsonAsync($"http://localhost:5000/api/option", _state.questions[i].Options[k]);
 
 
                     }

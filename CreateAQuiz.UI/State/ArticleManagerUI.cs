@@ -21,13 +21,13 @@ namespace CreateAQuiz.UI.State
 
         public async Task<IDataResult<List<Article>>> GetAll()
         {
-            return await _http.GetFromJsonAsync<IDataResult<List<Article>>>("article");
+            return await _http.GetFromJsonAsync<IDataResult<List<Article>>>("http://localhost:5000/api/article");
 
         }
 
         public async Task<IResult> Sync()
         {
-            return await _http.GetFromJsonAsync<IResult>("article/sync");
+            return await _http.GetFromJsonAsync<IResult>("http://localhost:5000/api/article/sync");
         }
        
     }
